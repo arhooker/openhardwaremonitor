@@ -188,6 +188,10 @@ namespace OpenHardwareMonitor.Hardware {
         DateTime now = DateTime.UtcNow;
         while (values.Count > 0 && (now - values.First.Time).TotalDays > 1)
           values.Remove();
+        //added below 2 lines to dirty solving the memory leaking problem
+        while (values.Count > 10)
+          values.Remove();
+        //----------------------------------------------------
 
         if (value.HasValue) {
           sum += value.Value;
